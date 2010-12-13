@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+<title>jquery.transfer</title>
+<meta content="Description" name="description" />
+<meta content="Keyword1,Keyword2,Keyword3" name="keywords" />
+<meta content="text/javascript" http-equiv="content-script-type" />
+<meta content="text/css" http-equiv="content-style-type" />
+<meta content="no-cache" http-equiv="cache-control" />
+<meta content="no-cache" http-equiv="pragma" />
+<meta content="auther" name="author" />
+<meta content="accont@domain.com" name="reply-to" />
+<meta content="© Copyright" name="copyright" />
+<meta content="noindex,nofollow" name="robots" />
+<link href="mailto:author@domain.com" rev="made" />
+<link href="/" rel="start" />
+<link media="screen,print" href="./css/local.css" type="text/css" rel="stylesheet" />
+<script src="./js/jquery-1.3.2.min.js" type="text/javascript"></script>
+<!-- jquery.transfer -->
+<script src="./js/jquery.ui/ui.core.js" type="text/javascript"></script>
+<script src="./js/jquery.ui/ui.sortable.js" type="text/javascript"></script>
+<script src="./js/jquery.transfer.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function(){
+    $('#transfer-list').transfer({
+      join: $('#transfer-join'), // *required* jQuery object
+      list: '.list', // *required* elements
+      addCheckFunc: function($item, $button) { // function
+        var id = $('.transfer-id', $item).val(),
+            unique = true,
+            $clonesId = $('#transfer-join .transfer-id');
+        $clonesId.each(function() {
+          if ($(this).val() == id) {
+            unique = false;
+            return false;
+          }
+        });
+        if (unique === false) return false;
+        return window.confirm('Add this item ?');
+      },
+      addBeforeFunc: function($item, $add) { // function
+      },
+      addFunc: function($item, $add, $clone) { // function
+        $add.css({visibility: 'hidden'});
+        $('.transfer-button-add', $clone).removeClass('transfer-button-add').addClass('transfer-button-remove').val('remove');
+      },
+      addAfterFunc: function($item, $add, $clone) { // function
+      },
+      removeCheckFunc: function($clone, $remove) { // function
+        return window.confirm('Remove this item ?');
+      },
+      removeBeforeFunc: function($clone, $remove) { // function
+      },
+      removeFunc: function($clone, $remove) { // function
+      },
+      removeAfterFunc: function($clone, $remove) { // function
+        var id = $('.transfer-id', $clone).val(),
+            $transfersId = $('#transfer-list .transfer-id'),
+            $item;
+        $transfersId.each(function() {
+          if ($(this).val() == id) {
+            $item = $(this).closest('.list');
+            return false;
+          }
+        });
+        $('.transfer-button-add', $item).css({visibility: ''});
+      },
+      sortable: true
+    });
+  });
+</script>
+<!-- // jquery.transfer -->
+</head>
+<body>
+
+<div id="transfer-list">
+  <div class="list clearfix">
+    <p>item A</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="1" />
+  </div>
+  <div class="list clearfix">
+    <p>item B</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="2" />
+  </div>
+  <div class="list clearfix">
+    <p>item C</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="3" />
+  </div>
+  <div class="list clearfix">
+    <p>item D</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="4" />
+  </div>
+  <div class="list clearfix">
+    <p>item E</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="5" />
+  </div>
+  <div class="list clearfix">
+    <p>item F</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="6" />
+  </div>
+  <div class="list clearfix">
+    <p>item G</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="7" />
+  </div>
+  <div class="list clearfix">
+    <p>item H</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="8" />
+  </div>
+  <div class="list clearfix">
+    <p>item I</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="9" />
+  </div>
+  <div class="list clearfix">
+    <p>item J</p>
+    <input type="button" value="Add" class="transfer-button-add" />
+    <input type="hidden" name="id[]" class="transfer-id" value="10" />
+  </div>
+</div>
+
+<div id="transfer-join">
+</div>
+
+</body>
+</html>
